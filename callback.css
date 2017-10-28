@@ -1,0 +1,85 @@
+.table {
+	margin-right:200px; 
+}
+
+#md-inp input{
+	width:200px;
+	height:20px;
+}
+
+
+
+.flex-container {
+  padding: 0;
+  margin: 10px;
+  list-style: none;
+  
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: inline-flex;
+
+   
+  -webkit-flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.flex-item1 {
+
+ order: 1;
+  padding: 10px;
+  width: 200px;
+  height: 20px;
+  margin-top: 20px;
+  
+  
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: left;
+}
+
+.flex-item2 {
+
+ order: 2;
+  padding: 5px;
+  width: 200px;
+  height: 20px;
+  margin-top: 10px;
+  
+  
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+  text-align:left;
+}
+
+.flex-item3 {
+	 order: 3;
+  padding: 5px;
+  width: 200px;
+  height: 20px;
+  margin-top: 10px;
+  
+
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: left;
+}
+
+.flex-item4 {
+  order:4;
+
+  padding: 5px;
+  width: 200px;
+  height: 20px;
+  margin-top: 10px;
+  
+
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: left;
+}
