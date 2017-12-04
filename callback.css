@@ -25,12 +25,17 @@
   justify-content: space-between;
 }
 
+\
+.Loading{
+  display:none;
+}
+
 .flex-item1 {
 
  order: 1;
   padding: 10px;
   width: 200px;
-  height: 20px;
+  height: 40px;
   margin-top: 20px;
   
   
@@ -45,7 +50,7 @@
  order: 2;
   padding: 5px;
   width: 200px;
-  height: 20px;
+  height: 30px;
   margin-top: 10px;
   
   
@@ -59,7 +64,7 @@
 	 order: 3;
   padding: 5px;
   width: 200px;
-  height: 20px;
+  height: 30px;
   margin-top: 10px;
   
 
@@ -74,7 +79,7 @@
 
   padding: 5px;
   width: 200px;
-  height: 20px;
+  height: 30px;
   margin-top: 10px;
   
 

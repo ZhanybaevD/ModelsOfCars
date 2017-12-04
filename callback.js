@@ -1,40 +1,36 @@
-
-
-// function hello(){
-// 	$("p").hide(1500, function(){
-
-	
-// 	alert("Paragraph hidden");	
-// 	 });	
-// }
-
-
-
-
-// function burger (param1, param2, callback){
-// 	alert (param1 + param2);
-// 	callback()
-
-// }
-
-// $("#b").click(function(){
-// 	burger('burger', 'cheese-burger', function(){
-// 		alert('thank');
-// 	})
-// })
-
-
-
-// $("#b").click(function(){
-// 	$("p").append(' world ');
-// }) 
- var marki;
+ var marks;
  var model;
  var year;
  var color;
  var edsel;
 
-
+  $(document).ready(function(){
+  	$.ajax({
+    url: 'https://scalr.api.appbase.io/Cars/machines/_search?q=name:Daniyar',
+    headers: {
+        'Authorization':'Basic dlN1MDd5R3NwOjlmOGI4Y2E4LTkxM2UtNGQzMy1iZjFkLTZhMWE0OGM5MGQyYg==',
+        'Content-Type':'application/json'
+    },
+    method: 'GET',
+    dataType: "json",
+}).done(function(data){
+	$.each(data.hits.hits, function(){
+		console.log(this._id)
+		$('.Loading').css('display' , 'block')
+			$("#tb").append('<tr>' + '<td>' + this._source.mark + '</td>' 
+	 								+ '<td>' + this._source.model + '</td>' 
+	 								+ '<td>' + this._source.year + '</td>' 
+	 								+ '<td>' + this._source.color + '</td>' 
+	 								+ '<td>' + `<button data-id=${this._id} id="del" class="btn btn-danger">Delete</button>` + '</td>' 
+	 								+ '<td><button id="edit" type="button" class="btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></button></td>' 
+	 								+ '<td><button id="show" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Show</button></td>' + '</tr>');
+	})
+}).fail(function( jqXHR, textStatus, error){
+		alert('error:' + jqXHR )
+		alert(error);
+	})
+})
+    
 
 
 	$('#myModal').on('shown.bs.modal', function () {
@@ -42,32 +38,71 @@
 })
 
 $("#b").click(function(){
+	
+var file = {
+	"mark" : $('#mark').val(),
+	"model" : $('#model').val(),
+	"year" : $('#year').val(),
+	"color" : $('#color').val(),
+	"name" : "Daniyar" ,
+}
+ $.ajax({
+    url: 'https://scalr.api.appbase.io/Cars/machines',
+    headers: {
+        'Authorization':'Basic dlN1MDd5R3NwOjlmOGI4Y2E4LTkxM2UtNGQzMy1iZjFkLTZhMWE0OGM5MGQyYg==',
+        'Content-Type':'application/json'
+    },
+    method: 'POST',
+    dataType: "json",
+    data: JSON.stringify(file),
+    }) .done(function(data){
+    	console.log(data)
 	$("#tb").append('<tr>' + '<td>' + $("#mark").val() + '</td>' 
-	 								+ '<td>' + $('#model').val() + '</td>' 
-	 								+ '<td>' + $('#year').val() + '</td>' 
-	 								+ '<td>' + $('#color').val() + '</td>' 
-	 								+ '<td>' + $('#sel').val() + '</td>' 
-	 								+ '<td>' + '<button id="btn" class="btn btn-danger">Delete</button>' + '</td>' 
-	 								+ '<td><button id="edit" type="button" class="btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></button></td>' 
-	 								+ '<td><button id="show" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Show</button></td>' + '</tr>');
-	})
-	$("#tb").on('click', '#btn', (function(){
-			$(this).parent().parent().remove() 
+	 				+ '<td>' + $('#model').val() + '</td>' 
+	 				+ '<td>' + $('#year').val() + '</td>' 
+	 				+ '<td>' + $('#color').val() + '</td>' 
+	 				+ '<td>' + $('#sel').val() + '</td>' 
+	 				+ '<td>' + `<button data-id=${data._id}  id="del" class="btn btn-danger">Delete</button>` + '</td>' 
+	 				+ '<td><button id="edit" type="button" class="btn btn-primary glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></button></td>' 
+	 				+ '<td><button id="show" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">Show</button></td>' + '</tr>');
+	
+  }).fail(function( error){
+      console.log(error);
+      alert('fall');
+  })
+})
+	$("#tb").on('click', '#del', (function(){
+		$.ajax({
+    url: `https://scalr.api.appbase.io/Cars/machines/${$(this).attr('data-id')}`,
+    headers: {
+        'Authorization':'Basic dlN1MDd5R3NwOjlmOGI4Y2E4LTkxM2UtNGQzMy1iZjFkLTZhMWE0OGM5MGQyYg==',
+        'Content-Type':'application/json'
+    },
+    type: 'DELETE',
+    dataType: "json",
+    }).done(function(response){
+  		location.reload();
+    }).fail(function(error){
+    	console.log(error);
+
+    })
+
+			// $(this).parent().parent().remove() 
 	}))
 
 	$('#tb').on('click', '#edit', function(){
-		 marki = $(this).parent().parent().find('td').first();
-		 model = marki.next();
+		 marks = $(this).parent().parent().find('td').first();
+		 model = marks.next();
 		 year = model.next();
 		 color = year.next();
 		 edsel = color.next();
-			$ ('#mrk').val(marki.html());
+			$ ('#mrk').val(marks.html());
 			$ ('#mdl').val(model.html());
 			$ ('#yr').val(year.html());
 			$ ('#clr').val(color.html());
 			$ ('#sel').val(edsel.html());
 		$('#myModal').on('click', '#save', function(){
-			marki.html($('#mrk').val());
+			marks.html($('#mrk').val());
 			model.html($('#mdl').val());
 			year.html($('#yr').val());
 			color.html($('#clr').val());
@@ -86,11 +121,9 @@ $("#b").click(function(){
 
 	$('#myModal2').on('click', '#showlol', (function(){
 		$('#showul').html('');
-	})
-	)
+	}));
 	
 	
-
 
 	
 	 
